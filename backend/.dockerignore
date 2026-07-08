@@ -1,0 +1,11 @@
+target/
+*.class
+*.jar
+*.war
+.git
+.github
+.vscode
+*.md
+Dockerfile
+.dockerignore
+src/test/

@@ -1,0 +1,19 @@
+{
+  "name": "Alex Morgan",
+  "title": "Product Manager",
+  "summary": "Product leader focused on AI-driven platforms, experienced in cross-functional delivery and data-informed strategy.",
+  "skills": [
+    "AI",
+    "Roadmapping",
+    "Stakeholder Management"
+  ],
+  "experience": [
+    {
+      "id": "exp-1",
+      "company": "Lumina Labs",
+      "role": "Senior Product Manager",
+      "dates": "2022 - Present",
+      "description": "Led AI platform features, improved matching accuracy by 23%."
+    }
+  ]
+}
