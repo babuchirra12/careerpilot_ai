@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col lg:flex-row">
@@ -13,8 +13,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
         {/* Logo + back */}
         <Link href="/" className="relative z-10 flex items-center gap-2 w-fit">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-sm font-bold text-white shadow-lg shadow-sky-500/30">CP</span>
-          <span className="text-lg font-bold tracking-tight text-white">CareerPilot <span className="text-sky-400">AI</span></span>
+          <Image src="/logo.png"
+            alt="CareerPilot AI"
+            width={100}
+            height={100}
+            priority
+            className="h-12 w-12 object-contain"
+          />
+          {/* <span className="text-lg font-bold tracking-tight text-white">CareerPilot <span className="text-sky-400">AI</span></span> */}
         </Link>
 
         {/* Tagline */}
@@ -73,8 +79,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             Home
           </Link>
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-500 text-xs font-bold text-white">CP</span>
-            <span className="text-sm font-bold text-white">CareerPilot <span className="text-sky-400">AI</span></span>
+            <Image src="/logo.png"
+              alt="CareerPilot AI"
+              width={100}
+              height={100}
+          priority
+              className="h-12 w-12 object-contain"
+            />
+            {/* <span className="text-sm font-bold text-white">CareerPilot <span className="text-sky-400">AI</span></span> */}
           </Link>
         </div>
 

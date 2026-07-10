@@ -26,6 +26,7 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,18 +38,48 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
             .authorizeHttpRequests(auth -> auth
+
+                    // Public APIs
                     .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                    .requestMatchers("/api/jobs").permitAll()
+
+                    .requestMatchers(
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**"
+                    ).permitAll()
+
+
+                    // Jobs
                     .requestMatchers("/api/jobs/**").permitAll()
+
+
+                    // AI
+                    .requestMatchers("/api/ai/**").permitAll()
+
+
+                    // Dashboard TEST
+                    .requestMatchers("/api/dashboard/**").permitAll()
+
+
                     .anyRequest().authenticated()
             )
+
+
             .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    session.sessionCreationPolicy(
+                            SessionCreationPolicy.STATELESS
+                    )
             )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+            .addFilterBefore(
+                    jwtFilter,
+                    UsernamePasswordAuthenticationFilter.class
+            );
+
 
         return http.build();
     }

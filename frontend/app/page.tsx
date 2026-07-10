@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans">
@@ -9,8 +9,14 @@ export default function Home() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-500 text-sm font-bold text-white">CP</span>
-            <span className="text-lg font-bold tracking-tight text-white">CareerPilot <span className="text-sky-400">AI</span></span>
+            <Image src="/logo.png"
+              alt="CareerPilot AI"
+              width={100}
+              height={100}
+              priority
+              className="h-12 w-12 object-contain"
+            />
+            {/* <span className="text-lg font-bold tracking-tight text-white">CareerPilot <span className="text-sky-400">AI</span></span> */}
           </Link>
 
           {/* Nav links */}
@@ -247,7 +253,13 @@ export default function Home() {
       <footer className="border-t border-white/5 py-10 px-6">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-500 text-xs font-bold text-white">CP</span>
+             <Image  src="/logo.png"
+                       alt="CareerPilot AI"
+                       width={50}
+                       height={50}
+                       priority
+                       className="h-12 w-12 object-contain"
+                     />
             <span className="text-sm font-semibold text-white">CareerPilot AI</span>
           </div>
           <p className="text-xs text-slate-600">© 2026 CareerPilot AI. All rights reserved.</p>

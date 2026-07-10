@@ -1,28 +1,148 @@
 import Link from "next/link";
+import type { Job } from "../../types/job";
 
-export default function JobCard({ job }: { job: any }) {
-  const slug = encodeURIComponent(
-    job.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
-  );
+interface JobCardProps {
+  job: Job;
+}
+
+export default function JobCard({ job }: JobCardProps) {
+  const slug = job.id
+    ? String(job.id)
+    : encodeURIComponent(
+        job.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "")
+      );
 
   return (
-    <article className="rounded-[28px] border border-white/10 bg-slate-950/90 p-6 shadow-[0_20px_40px_rgba(15,23,42,0.25)] transition duration-200 hover:-translate-y-1 hover:border-sky-400/30">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">{job.company}</p>
-          <h2 className="mt-3 text-xl font-semibold text-white">{job.title}</h2>
+    <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-lg transition hover:border-sky-500 hover:shadow-xl">
+
+      {/* Company Header */}
+      <div className="flex items-center justify-between">
+
+        <div className="flex items-center gap-3">
+
+          {job.companyLogo ? (
+            <img
+              src={job.companyLogo}
+              alt={job.company}
+              className="h-12 w-12 rounded-lg object-cover"
+            />
+          ) : (
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-700 text-lg font-bold text-white">
+              {job.company.charAt(0)}
+            </div>
+          )}
+
+          <div>
+            <p className="text-sm text-sky-400">
+              {job.company}
+            </p>
+
+            <h2 className="text-xl font-bold text-white">
+              {job.title}
+            </h2>
+          </div>
+
         </div>
-        <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-300">{job.score}</span>
+
+        <span
+          className={`rounded-full px-3 py-1 text-xs font-semibold ${
+            job.status === "ACTIVE"
+              ? "bg-green-500/20 text-green-400"
+              : "bg-red-500/20 text-red-400"
+          }`}
+        >
+          {job.status}
+        </span>
+
       </div>
-      <p className="mt-4 text-sm text-slate-400">{job.location} · {job.level}</p>
-      <div className="mt-5 flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.2em] text-slate-300">
-        {job.tags.map((tag: string) => (
-          <span key={tag} className="rounded-full bg-slate-900/90 px-3 py-1">{tag}</span>
-        ))}
+
+      {/* Match Score */}
+      {job.matchScore !== undefined && (
+        <div className="mt-4">
+          <span className="rounded-full bg-sky-500/20 px-3 py-1 text-sm font-semibold text-sky-300">
+            ⭐ {job.matchScore}% Match
+          </span>
+        </div>
+      )}
+
+      {/* Job Details */}
+      <div className="mt-5 space-y-2 text-sm text-slate-300">
+
+        <p>📍 {job.location || "Remote"}</p>
+
+        <p>💼 {job.jobType}</p>
+
+        {job.employmentType && (
+          <p>🏢 {job.employmentType}</p>
+        )}
+
+        {job.experience && (
+          <p>👨‍💻 {job.experience}</p>
+        )}
+
+        {job.level && (
+          <p>🎯 {job.level}</p>
+        )}
+
+        {job.salary && (
+          <p>💰 {job.salary}</p>
+        )}
+
       </div>
-      <Link href={`/jobs/${slug}`} className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-sky-500 px-4 py-3 text-sm font-semibold text-slate-950 transition duration-200 hover:bg-sky-400">
-        View role
-      </Link>
-    </article>
+
+      {/* Skills */}
+      {job.skills && (
+        <div className="mt-4">
+          <h4 className="mb-2 text-sm font-semibold text-white">
+            Skills
+          </h4>
+
+          <div className="flex flex-wrap gap-2">
+            {job.skills.split(",").map((skill) => (
+              <span
+                key={skill.trim()}
+                className="rounded-full bg-slate-800 px-3 py-1 text-xs text-sky-300"
+              >
+                {skill.trim()}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Description */}
+      {job.description && (
+        <p className="mt-5 line-clamp-3 text-sm text-slate-400">
+          {job.description}
+        </p>
+      )}
+
+      {/* Buttons */}
+      <div className="mt-6 flex gap-3">
+
+        <Link
+          href={`/jobs/${slug}`}
+          className="flex-1 rounded-xl bg-sky-500 px-4 py-3 text-center font-semibold text-slate-950 transition hover:bg-sky-400"
+        >
+          View Details
+        </Link>
+
+        {job.applyUrl && (
+          <a
+            href={job.applyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 rounded-xl border border-sky-500 px-4 py-3 text-center font-semibold text-sky-400 transition hover:bg-sky-500 hover:text-white"
+          >
+            Apply Now
+          </a>
+        )}
+
+      </div>
+
+    </div>
   );
 }

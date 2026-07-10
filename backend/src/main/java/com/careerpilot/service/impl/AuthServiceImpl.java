@@ -48,14 +48,22 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(request.getEmail().trim().toLowerCase());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("USER");
-        user.setCareerStage(request.getCareerStage() != null ? request.getCareerStage().trim() : null);
-        user.setLocation(request.getLocation() != null ? request.getLocation().trim() : null);
+        user.setCareerStage(request.getCareerStage());
+        user.setLocation(request.getLocation());
 
         userRepository.save(user);
 
         String token = jwtService.generateToken(user.getEmail());
 
-        return new AuthResponse(token, "Registration successful");
+        long expiresIn = 86400L;
+        boolean rememberMe = false;
+
+        return new AuthResponse(
+                token,
+                "Registration successful",
+                expiresIn,
+                rememberMe
+        );
     }
 
     @Override
@@ -70,6 +78,17 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(user.getEmail());
 
-        return new AuthResponse(token, "Login successful");
+        boolean rememberMe = Boolean.TRUE.equals(request.getRememberMe());
+
+        long expiresIn = rememberMe
+                ? 2592000L   // 30 days
+                : 86400L;    // 1 day
+
+        return new AuthResponse(
+                token,
+                "Login successful",
+                expiresIn,
+                rememberMe
+        );
     }
 }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 type ResumeItem = {
   id: string;
   name: string;
+  title?: string;  // role / job title of the resume
   updated: string;
 };
 
@@ -43,9 +44,14 @@ export default function ResumeList({ resumes, onDownload }: { resumes?: ResumeIt
       {list.map((r) => (
         <div key={r.id} className="rounded-2xl bg-slate-900/90 p-4">
           <div className="flex items-center justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <p className="font-semibold text-white">{r.name}</p>
-              <p className="text-sm text-slate-400">Updated {r.updated}</p>
+              {r.title && (
+                <span className="inline-block mt-1 rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-xs font-medium text-sky-300">
+                  {r.title}
+                </span>
+              )}
+              <p className="mt-1 text-xs text-slate-500">Updated {r.updated}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               <button

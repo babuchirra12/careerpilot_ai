@@ -41,6 +41,7 @@ export default function LoginForm() {
         body: JSON.stringify({
           email: form.email,
           password: form.password,
+          rememberMe: form.rememberMe,
         }),
       });
 

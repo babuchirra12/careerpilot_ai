@@ -14,6 +14,11 @@ import lombok.Setter;
 public class AuthResponse {
 
     private String token;
-
     private String message;
+
+    /** Token lifetime in seconds (86400 = 24 h, 2592000 = 30 days). */
+    private long expiresIn;
+
+    /** Echoes back the rememberMe flag the client sent. */
+    private boolean rememberMe;
 }

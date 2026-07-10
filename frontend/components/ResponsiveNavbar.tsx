@@ -4,14 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { removeToken } from "../lib/auth";
-
+import Image from "next/image";
 const navLinks = [
   { href: "/dashboard", label: "Overview", icon: "▦" },
-  { href: "/resume",    label: "Resume",   icon: "📄" },
-  { href: "/jobs",      label: "Jobs",     icon: "🎯" },
-  { href: "/analytics", label: "Analytics",icon: "📊" },
-  { href: "/ai-coach",  label: "AI Coach", icon: "🤖" },
-  { href: "/profile",   label: "Profile",  icon: "👤" },
+  { href: "/resume", label: "Resume", icon: "📄" },
+  { href: "/jobs", label: "Jobs", icon: "🎯" },
+  { href: "/analytics", label: "Analytics", icon: "📊" },
+  { href: "/ai-coach", label: "AI Coach", icon: "🤖" },
+  { href: "/profile", label: "Profile", icon: "👤" },
 ];
 
 export default function ResponsiveNavbar() {
@@ -30,11 +30,24 @@ export default function ResponsiveNavbar() {
       <div className="flex items-center justify-between">
 
         {/* Logo — links back to landing */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-500 text-xs font-bold text-white shadow-md shadow-sky-500/30">CP</span>
-          <span className="text-base font-bold tracking-tight text-white">
-            CareerPilot <span className="text-sky-400">AI</span>
-          </span>
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <Image
+            src="/logo.png"
+            alt="CareerPilot AI"
+            width={50}
+            height={50}
+            priority
+            className="h-12 w-12 object-contain"
+          />
+
+          <div className="hidden sm:flex flex-col leading-tight">
+            <span className="text-xl font-extrabold tracking-tight text-white">
+              Career<span className="text-sky-400">Pilot</span>
+            </span>
+            <span className="text-xs text-slate-400">
+              AI
+            </span>
+          </div>
         </Link>
 
         {/* Desktop nav links */}
@@ -56,11 +69,10 @@ export default function ResponsiveNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition duration-150 ${
-                  active
+                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition duration-150 ${active
                     ? "bg-sky-500/15 text-sky-400"
                     : "text-slate-400 hover:bg-white/5 hover:text-white"
-                }`}
+                  }`}
               >
                 <span className="text-xs">{link.icon}</span>
                 {link.label}
@@ -136,11 +148,10 @@ export default function ResponsiveNavbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition ${
-                  active
+                className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition ${active
                     ? "bg-sky-500/15 text-sky-400"
                     : "text-slate-400 hover:bg-white/5 hover:text-white"
-                }`}
+                  }`}
               >
                 <span>{link.icon}</span>
                 {link.label}
